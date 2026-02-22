@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PirahnaKR</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap');
+
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background: radial-gradient(circle at 20% 30%, #050506cc 30%, transparent 70%), radial-gradient(circle at 80% 60%, #0c0d1880 25%, transparent 70%), linear-gradient(135deg, #121217, #1c1c22);
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 16px 48px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: #f5f5f7;
+    margin-bottom: 40px;
+  }
+
+  .logo svg {
+    width: 36px;
+    height: 36px;
+    fill: #69b4f8;
+    flex-shrink: 0;
+  }
+
+  .glass-container {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(25, 25, 35, 0.55);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 24px 24px 40px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 18px;
+    font-size: 1.13rem;
+    color: #ddd;
+  }
+
+  thead tr th {
+    text-align: left;
+    padding: 14px 20px;
+    font-weight: 600;
+    background: rgba(30,30,40,0.85);
+    border-radius: 10px;
+    user-select: none;
+  }
+
+  tbody tr td {
+    vertical-align: middle;
+    padding: 14px 20px;
+    background: rgba(15,15,22,0.7);
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+  }
+
+  tbody tr td:first-child {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #e0e0e0;
+  }
+
+  tbody tr td svg {
+    width: 22px;
+    height: 22px;
+    fill: #99cfff;
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+
+  tbody tr td:nth-child(2) {
+    color: #ccc;
+    line-height: 1.4;
+  }
+
+  tbody tr:hover td {
+    background: rgba(35, 35, 50, 0.85);
+    color: #fff;
+  }
+
+  @media (max-width: 520px) {
+    .logo {
+      font-size: 2rem;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .glass-container {
+      max-width: 100%;
+      padding: 20px 16px 36px;
+    }
+
+    table thead tr th,
+    table tbody tr td {
+      padding: 12px 14px;
+      font-size: 1rem;
+    }
+
+    tbody tr td svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+  }
+
+  /* Уведомление снизу */
+  .notification {
+    position: fixed;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 200px;
+    max-width: 90vw;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #121218;
+    opacity: 0;
+    pointer-events: none;
+    transition: bottom 0.5s ease, opacity 0.5s ease;
+    z-index: 9999;
+  }
+
+  .notification.show {
+    bottom: 24px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .notification button {
+    background: #fff;
+    color: #121218;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 22px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: background-color 0.3s ease;
+  }
+
+  .notification button:hover,
+  .notification button:focus {
+    background-color: #e0e0e0;
+    outline: none;
+  }
+
+  @media (max-width: 520px) {
+    .notification {
+      bottom: -60px;
+      min-width: 160px;
+      font-size: 0.9rem;
+      padding: 10px 18px;
+    }
+    .notification.show {
+      bottom: 16px;
+    }
+    .notification button {
+      padding: 6px 18px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="logo" aria-label="Логотип PirahnaKR с иконкой рыбы" role="img">
+  <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" >
+    <path d="M38.9 32c-2.12-5.23-11.27-9.91-14.43-11a1 1 0 0 0-1.34.95v.04a1 1 0 0 0 .81.98c2.96.54 7.28 1.75 9.44 3.14a15.86 15.86 0 0 1 3.81 3.63c.1.14.03.32-.14.32H18.39A5.24 5.24 0 0 0 13 31.6c-.49 1.27-.66 4.13-.43 6.15a1 1 0 0 0 1.33.86c1.72-.66 6-2.41 7.89-4.21a18.52 18.52 0 0 1 3.32-2.93 7.9 7.9 0 0 1 5-1.46c.38 0 .71-.36.58-.73zm-13.4-5.78 4.68 4.89-6.23 1.14z" />
+    <circle cx="44" cy="20" r="4" fill="#69b4f8"/>
+  </svg>
+  PirahnaKR
+</header>
+
+<div class="glass-container" role="region" aria-label="Преимущества сервиса PirahnaKR">
+  <table>
+    <thead>
+      <tr>
+        <th>Преимущество</th>
+        <th>Описание</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2a8 8 0 11-7.91 6.35l1.45-1.45A5.98 5.98 0 0012 6zm0 12a8 8 0 01-6.35-3.09l1.45-1.45A5.98 5.98 0 0012 18zm6-6a8 8 0 01-3.09 6.35l-1.45-1.45A5.98 5.98 0 0018 12zm-6-6a6 6 0 00-4.24 10.24l1.42-1.42A3.98 3.98 0 0112 8z" fill="#99cfff"/>
+          </svg>
+          Полная анонимность
+        </td>
+        <td>Загрузка файлов без отслеживания личности</td>
+      </tr>
+      <tr>
+        <td>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 1a5 5 0 00-5 5v5H6a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1v-8a1 1 0 00-1-1h-1v-5a5 5 0 00-5-5zm-3 5a3 3 0 116 0v5H9V6z" fill="#99cfff"/>
+          </svg>
+          Надёжное шифрование
+        </td>
+        <td>Сквозное шифрование для полной безопасности</td>
+      </tr>
+      <tr>
+        <td>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M3 12l4-4v3h7v2H7v3l-4-4zm14-3v6h2V9h-2zm-4 11h2v-2h-2v2zm6-10h2v2h-2v-2z" fill="#99cfff"/>
+          </svg>
+          Молниеносная скорость
+        </td>
+        <td>Оптимизированные серверы для максимально быстрой передачи</td>
+      </tr>
+      <tr>
+        <td>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M4 4h16v16H4V4zm14 14V6H6v12h12zM8 8h8v2H8V8z" fill="#99cfff"/>
+          </svg>
+          Адаптивный UI
+        </td>
+        <td>Интуитивный дизайн для всех устройств, включая мобильные</td>
+      </tr>
+      <tr>
+        <td>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M17 7H7v10h10V7zm-9 9V8h9v8H8zM5 6h14v2H5V6z" fill="#99cfff"/>
+          </svg>
+          Любые форматы
+        </td>
+        <td>Поддержка загрузки любых типов файлов без ограничений</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="notification" role="alert" aria-live="polite" aria-atomic="true" id="notification">
+  <span>Готовы начать?</span>
+  <button type="button" id="startBtn">START</button>
+</div>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const notif = document.getElementById('notification');
+      notif.classList.add('show');
+    }, 2000);
+  });
+
+  document.getElementById('startBtn').addEventListener('click', () => {
+    window.location.href = 'https://pirahna123112githubio-production-3017.up.railway.app';
+  });
+</script>
+
+</body>
+</html>
+
+
